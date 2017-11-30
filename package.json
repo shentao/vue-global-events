@@ -1,0 +1,28 @@
+{
+  "name": "vue-global-events",
+  "version": "0.0.0",
+  "description": "Component to register global events",
+  "main": "dist/index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shentao/vue-global-events.git"
+  },
+  "keywords": [
+    "vue",
+    "events",
+    "global",
+    "window",
+    "listeners"
+  ],
+  "author": "Damian Dulisz <damian.dulisz@gmail.com>",
+  "contributors": [
+    "Damian Dulisz <damian.dulisz@gmail.com>",
+    "Eduardo San Martin Morote <posva13@gmail.com>"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shentao/vue-global-events/issues"
+  },
+  "homepage": "https://github.com/shentao/vue-global-events#readme"
+}
