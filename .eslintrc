@@ -1,0 +1,11 @@
+{
+  "extends": [
+    "posva"
+  ],
+  "env": {
+    "jest": true
+  },
+  "rules": {
+    "comma-dangle": ["error", "never"]
+  }
+}
