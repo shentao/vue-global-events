@@ -4,7 +4,8 @@
   "description": "Component to register global events",
   "main": "dist/index.js",
   "scripts": {
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "dev": "jest --watchAll --coverage"
   },
   "repository": {
     "type": "git",
