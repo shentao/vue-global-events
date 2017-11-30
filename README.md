@@ -36,6 +36,14 @@ After that you can register global events like this:
 
 ## Development
 
+Run tests in watch mode:
+
+```bash
+npm run dev
+```
+
+## Demo
+
 Just use [poi](https://github.com/egoist/poi)
 
 ```bash
