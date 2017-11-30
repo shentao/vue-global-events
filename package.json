@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "description": "Component to register global events",
   "main": "dist/index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "jest --coverage"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/shentao/vue-global-events.git"
@@ -24,5 +26,18 @@
   "bugs": {
     "url": "https://github.com/shentao/vue-global-events/issues"
   },
-  "homepage": "https://github.com/shentao/vue-global-events#readme"
+  "homepage": "https://github.com/shentao/vue-global-events#readme",
+  "devDependencies": {
+    "babel-jest": "^21.2.0",
+    "babel-preset-env": "^1.6.1",
+    "jest": "^21.2.1",
+    "vue": "^2.5.9",
+    "vue-template-compiler": "^2.5.9",
+    "vue-test-utils": "^1.0.0-beta.6"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.js$": "<rootDir>/node_modules/babel-jest"
+    }
+  }
 }
