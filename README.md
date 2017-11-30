@@ -1,12 +1,15 @@
 # vue-global-events
 
+> Listen to events on the document anywhere
+
 ## Installation
 ```bash
 npm install vue-global-events
 ```
 
 ## Usage
-```javascript
+
+```js
 import GlobalEvents from 'vue-global-events'
 
 // register globally
@@ -27,6 +30,7 @@ After that you can register global events like this:
   @keyup.ctrl.tab="nextTab"
   @keyup.ctrl.shift.tab="previousTab"
   @keyup.space="pause"
+  @contextmenu="openMenu"
 />
 ```
 
@@ -42,6 +46,11 @@ poi index.js
 ```
 
 ## Authors:
-Damian Dulisz @shentao
 
-Eduardo San Martin Morote @posva
+Damian Dulisz [@shentao](https://github.com/shentao)
+
+Eduardo San Martin Morote [@posva](https://github.com/posva)
+
+## License
+
+[MIT](http://opensource.org/licenses/MIT)
