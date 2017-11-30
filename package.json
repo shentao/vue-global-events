@@ -29,6 +29,9 @@
     "events",
     "global",
     "window",
+    "document",
+    "shortcuts",
+    "anywhere",
     "listeners"
   ],
   "author": "Damian Dulisz <damian.dulisz@gmail.com>",
