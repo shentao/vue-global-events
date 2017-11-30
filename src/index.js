@@ -1,9 +1,9 @@
 export default {
   render: h => h(),
   mounted () {
-  	this._listeners = Object.create(null)
+    this._listeners = Object.create(null)
     Object.keys(this.$listeners).forEach(event => {
-    	const handler = this.$listeners[event]
+      const handler = this.$listeners[event]
       document.addEventListener(event, handler)
       this._listeners[event] = handler
     })
