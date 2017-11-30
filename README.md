@@ -32,9 +32,12 @@ After that you can register global events like this:
 
 ## Development
 
-Just use poi.
+Just use [poi](https://github.com/egoist/poi)
 
 ```bash
+# if not yet installed
+npm i -g poi
+
 poi index.js
 ```
 
