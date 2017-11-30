@@ -2,13 +2,23 @@
   "name": "vue-global-events",
   "version": "0.0.1",
   "description": "Component to register global events",
-  "main": "dist/index.js",
+  "main": "dist/vue-global-events.cjs.js",
+  "module": "dist/vue-global-events.es.js",
+  "unpkg": "dist/vue-global-events.js",
+  "browser": "dist/vue-global-events.js",
+  "files": [
+    "README.md",
+    "LICENSE",
+    "dist/**",
+    "src/**"
+  ],
   "scripts": {
     "test": "jest --coverage",
     "dev": "jest --watchAll --coverage",
     "lint": "eslint --color --ext=js,vue src test.js",
     "pretest": "npm run lint",
-    "prebuild": "rollit"
+    "prepublishOnly": "npm run build",
+    "build": "rollit"
   },
   "repository": {
     "type": "git",
