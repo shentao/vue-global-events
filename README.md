@@ -1,7 +1,5 @@
 # vue-global-events
 
-## Work in progress. This is not yet published to NPM
-
 ## Installation
 ```bash
 npm install vue-global-events --save
@@ -42,4 +40,5 @@ poi index.js
 
 ## Authors:
 Damian Dulisz @shentao
+
 Eduardo San Martin Morote @posva

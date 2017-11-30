@@ -1,6 +1,6 @@
 {
   "name": "vue-global-events",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Component to register global events",
   "main": "dist/index.js",
   "scripts": {},
