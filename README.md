@@ -2,7 +2,7 @@
 
 ## Installation
 ```bash
-npm install vue-global-events --save
+npm install vue-global-events
 ```
 
 ## Usage
