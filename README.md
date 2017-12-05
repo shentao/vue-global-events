@@ -7,6 +7,8 @@
 npm install vue-global-events
 ```
 
+## [Demo](https://jsfiddle.net/shentao/jj7ku7mb/)
+
 ## Usage
 
 ```js
