@@ -9,6 +9,10 @@ npm install vue-global-events
 
 ## [Demo](https://jsfiddle.net/shentao/jj7ku7mb/)
 
+## Idea
+Thanks to Vue’s event modifiers, handling events is extremely easy however, you’re limited to DOM element events.
+We decided to change that, so now you can register global events (for example application shortcuts) just like you would listen to events on a component. No need to worry about unregistration either. You can toggle the events with a single `v-if`. Works with SSR too.
+
 ## Usage
 
 ```js
