@@ -22,7 +22,7 @@ export default {
     Object.keys(this.$listeners).forEach(event => {
       const handler = this.$listeners[event]
       document.addEventListener(
-        event.replace(nonEventNameCharsRE),
+        event.replace(nonEventNameCharsRE, ''),
         handler,
         extractEventOptions(event)
       )

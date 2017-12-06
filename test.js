@@ -59,6 +59,20 @@ describe('GlobalEvents', () => {
     document.addEventListener.mockRestore()
   })
 
+  test('strips off modifiers from events', () => {
+    const keydown = jest.fn()
+    document.addEventListener = jest.fn()
+    mount(GlobalEvents, {
+      listeners: {
+        '~keydown': keydown
+      }
+    })
+
+    expect(document.addEventListener.mock.calls[0][0]).toBe('keydown')
+    document.addEventListener.mockRestore()
+  })
+
+
   test('supports capture modifier', () => {
     const keydown = jest.fn()
     document.addEventListener = jest.fn()
