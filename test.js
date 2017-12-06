@@ -72,7 +72,6 @@ describe('GlobalEvents', () => {
     document.addEventListener.mockRestore()
   })
 
-
   test('supports capture modifier', () => {
     const keydown = jest.fn()
     document.addEventListener = jest.fn()
