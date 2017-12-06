@@ -40,5 +40,68 @@ describe('GlobalEvents', () => {
 
     expect(document.removeEventListener.mock.calls[0][0]).toBe('keydown')
     expect(document.removeEventListener.mock.calls[1][0]).toBe('callcontext')
+
+    document.removeEventListener.mockRestore()
+  })
+
+  test('supports passive modifier', () => {
+    const keydown = jest.fn()
+    document.addEventListener = jest.fn()
+    mount(GlobalEvents, {
+      listeners: {
+        '&keydown': keydown
+      }
+    })
+
+    expect(document.addEventListener.mock.calls[0][2]).toEqual({
+      passive: true
+    })
+    document.addEventListener.mockRestore()
+  })
+
+  test('supports capture modifier', () => {
+    const keydown = jest.fn()
+    document.addEventListener = jest.fn()
+    mount(GlobalEvents, {
+      listeners: {
+        '!keydown': keydown
+      }
+    })
+
+    expect(document.addEventListener.mock.calls[0][2]).toEqual({
+      capture: true
+    })
+    document.addEventListener.mockRestore()
+  })
+
+  test('supports once modifier', () => {
+    const keydown = jest.fn()
+    document.addEventListener = jest.fn()
+    mount(GlobalEvents, {
+      listeners: {
+        '~keydown': keydown
+      }
+    })
+
+    expect(document.addEventListener.mock.calls[0][2]).toEqual({
+      once: true
+    })
+    document.addEventListener.mockRestore()
+  })
+
+  test('supports multiple modifier', () => {
+    const keydown = jest.fn()
+    document.addEventListener = jest.fn()
+    mount(GlobalEvents, {
+      listeners: {
+        '~!keydown': keydown
+      }
+    })
+
+    expect(document.addEventListener.mock.calls[0][2]).toEqual({
+      capture: true,
+      once: true
+    })
+    document.addEventListener.mockRestore()
   })
 })
