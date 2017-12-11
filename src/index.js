@@ -32,7 +32,10 @@ export default {
 
   beforeDestroy () {
     for (const event in this._listeners) {
-      document.removeEventListener(event, this._listeners[event])
+      document.removeEventListener(
+        event.replace(nonEventNameCharsRE, ''),
+        this._listeners[event]
+      )
     }
   }
 }

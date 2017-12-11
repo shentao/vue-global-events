@@ -44,6 +44,23 @@ describe('GlobalEvents', () => {
     document.removeEventListener.mockRestore()
   })
 
+  test('cleans up events with modifiers', () => {
+    const keydown = jest.fn()
+    const wrapper = mount(GlobalEvents, {
+      listeners: {
+        '!keydown': keydown
+      }
+    })
+
+    document.removeEventListener = jest.fn()
+
+    wrapper.destroy()
+
+    expect(document.removeEventListener.mock.calls[0][0]).toBe('keydown')
+
+    document.removeEventListener.mockRestore()
+  })
+
   test('supports passive modifier', () => {
     const keydown = jest.fn()
     document.addEventListener = jest.fn()
