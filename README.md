@@ -7,7 +7,7 @@
 npm install vue-global-events
 ```
 
-## [Demo](https://jsfiddle.net/shentao/jj7ku7mb/)
+## [Demo](https://jsfiddle.net/posva/qk6hr1k4/)
 
 ## Idea
 Thanks to Vue’s event modifiers, handling events is extremely easy however, you’re limited to DOM element events.
@@ -39,6 +39,13 @@ After that you can register global events like this:
   @contextmenu="openMenu"
 />
 ```
+
+## Advice / Caveats
+
+- Always `.prevent` events with `.ctrl` and other modifiers as browsers may be using them as shortcuts.
+- Do not use shortcuts that are used by the system or that the browser **does not allow you to `.preventDefault()`**. The list includes `Ctrl+Tab`/`Cmd+Tab`, `Ctrl+W`/`Ctrl+W`. You can find more information [in this StackOverflow answer](https://stackoverflow.com/a/40434403/3384501).
+- Prefer using actual characters to keyCodes whenever possible: `@keydown.+` for detecting the plus sign. This is important because symbols and numbers on the digit row will provide different keyCodes depending on the layout used.
+- You can add custom keyCodes to `Vue.config.keyCodes`. This is especially useful for numbers on the digit row: add `Vue.config.keyCodes.digit1 = 49` so you can write `@keydown.digit1` because writing `@keydown.1` will trigger when `keyCode === 1`.
 
 ## Development
 
