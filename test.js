@@ -2,32 +2,76 @@ import { mount } from 'vue-test-utils'
 import GlobalEvents from './src'
 
 describe('GlobalEvents', () => {
+  let wrapper
+  afterEach(() => {
+    wrapper.destroy()
+  })
+
   test('transfer events', () => {
     const keydown = jest.fn()
     const callcontext = jest.fn()
-    const wrapper = mount(GlobalEvents, {
+    wrapper = mount(GlobalEvents, {
       listeners: {
         keydown,
         callcontext
       }
     })
-    expect(keydown.mock.calls.length).toBe(0)
-    expect(callcontext.mock.calls.length).toBe(0)
+    expect(keydown).not.toHaveBeenCalled()
+    expect(callcontext).not.toHaveBeenCalled()
 
     document.dispatchEvent(new Event('keydown'))
 
-    expect(keydown.mock.calls.length).toBe(1)
-    expect(callcontext.mock.calls.length).toBe(0)
+    expect(keydown).toHaveBeenCalledTimes(1)
+    expect(callcontext).not.toHaveBeenCalled()
 
     wrapper.trigger('keydown')
 
-    expect(keydown.mock.calls.length).toBe(1)
+    expect(keydown).toHaveBeenCalledTimes(1)
+  })
+
+  test('filter out events', () => {
+    const keydown = jest.fn()
+    let called = false
+    // easy to test filter that calls only the filst event
+    const filter = event => {
+      const shouldCall = !called
+      called = true
+      return shouldCall
+    }
+    wrapper = mount(GlobalEvents, {
+      listeners: { keydown },
+      propsData: { filter }
+    })
+    expect(keydown).not.toHaveBeenCalled()
+
+    document.dispatchEvent(new Event('keydown'))
+    expect(keydown).toHaveBeenCalledTimes(1)
+
+    document.dispatchEvent(new Event('keydown'))
+    document.dispatchEvent(new Event('keydown'))
+    document.dispatchEvent(new Event('keydown'))
+    expect(keydown).toHaveBeenCalledTimes(1)
+  })
+
+  test('filter gets passed handler, and keyName', () => {
+    const keydown = jest.fn()
+    const filter = jest.fn()
+    wrapper = mount(GlobalEvents, {
+      listeners: { keydown },
+      propsData: { filter }
+    })
+
+    const event = new Event('keydown')
+    document.dispatchEvent(event)
+    expect(keydown).not.toHaveBeenCalled()
+
+    expect(filter).toHaveBeenCalledWith(event, keydown, 'keydown')
   })
 
   test('cleans up events', () => {
     const keydown = jest.fn()
     const callcontext = jest.fn()
-    const wrapper = mount(GlobalEvents, {
+    wrapper = mount(GlobalEvents, {
       listeners: {
         keydown,
         callcontext
@@ -46,7 +90,7 @@ describe('GlobalEvents', () => {
 
   test('cleans up events with modifiers', () => {
     const keydown = jest.fn()
-    const wrapper = mount(GlobalEvents, {
+    wrapper = mount(GlobalEvents, {
       listeners: {
         '!keydown': keydown
       }
