@@ -47,6 +47,12 @@ After that you can register global events like this:
 - type: `Function`
 - default: `() => true`
 
+##### arguments
+
+- `event`: Native Event Object
+- `handler`: method passed to `GlobalEvents` component
+- `eventName`: event name with [key modifiers](https://vuejs.org/v2/guide/render-function.html#Event-amp-Key-Modifiers)
+
 `filter` should return `false` to prevent the execution of a handler:
 
 ```html
@@ -56,7 +62,7 @@ After that you can register global events like this:
 />
 ```
 
-In the example above `event` would be the native `keyup` event, `handler` would be `nextTab` and `eventName` woudl be `keyup`. `eventName` can contain [key modifiers](https://vuejs.org/v2/guide/render-function.html#Event-amp-Key-Modifiers)
+In the example above `event` would be the native `keyup` [Event Object](https://developer.mozilla.org/en-US/docs/Web/API/Event), `handler` would be the method `nextTab` and `eventName` would be the string `keyup`. `eventName` can contain [key modifiers](https://vuejs.org/v2/guide/render-function.html#Event-amp-Key-Modifiers) if used
 
 ## Advice / Caveats
 
