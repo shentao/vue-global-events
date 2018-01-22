@@ -15,12 +15,23 @@ function extractEventOptions (eventDescriptor) {
 }
 
 export default {
+  name: 'GlobalEvents',
+  props: {
+    filter: {
+      type: Function,
+      default: e => true
+    }
+  },
+
   render: h => h(),
 
   mounted () {
     this._listeners = Object.create(null)
     Object.keys(this.$listeners).forEach(event => {
-      const handler = this.$listeners[event]
+      const listener = this.$listeners[event]
+      const handler = e => {
+        this.filter(e, listener, event) && listener(e)
+      }
       document.addEventListener(
         event.replace(nonEventNameCharsRE, ''),
         handler,

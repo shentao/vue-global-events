@@ -40,6 +40,24 @@ After that you can register global events like this:
 />
 ```
 
+### Props
+
+#### `filter`
+
+- type: `Function`
+- default: `() => true`
+
+`filter` should return `false` to prevent the execution of a handler:
+
+```html
+<GlobalEvents
+  :filter="(event, handler, eventName) => event.target.tagName !== 'INPUT'"
+  @keyup.prevent.space.exact="nextTab"
+/>
+```
+
+In the example above `event` would be the native `keyup` event, `handler` would be `nextTab` and `eventName` woudl be `keyup`. `eventName` can contain [key modifiers](https://vuejs.org/v2/guide/render-function.html#Event-amp-Key-Modifiers)
+
 ## Advice / Caveats
 
 - Always `.prevent` events with `.ctrl` and other modifiers as browsers may be using them as shortcuts.
