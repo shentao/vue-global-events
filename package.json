@@ -34,10 +34,19 @@
     "anywhere",
     "listeners"
   ],
-  "author": "Damian Dulisz <damian.dulisz@gmail.com>",
+  "author": {
+    "name": "Damian Dulisz",
+    "email": "damian.dulisz@gmail.com"
+  },
   "contributors": [
-    "Damian Dulisz <damian.dulisz@gmail.com>",
-    "Eduardo San Martin Morote <posva13@gmail.com>"
+    {
+      "name": "Damian Dulisz",
+      "email": "damian.dulisz@gmail.com"
+    },
+    {
+      "name": "Eduardo San Martin Morote",
+      "email": "posva13@gmail.com"
+    }
   ],
   "license": "MIT",
   "bugs": {
