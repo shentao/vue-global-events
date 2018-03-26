@@ -1,7 +1,7 @@
-/*!
- * vue-global-events v0.0.0
- * (c) 2017 Damian Dulisz
- * Released under the MIT License.
+/**
+ * vue-global-events v1.0.2
+ * (c) 2018 Damian Dulisz <damian.dulisz@gmail.com>
+ * @license MIT
  */
 
 (function (global, factory) {
@@ -10,23 +10,60 @@
 	(global.VueGlobalEvents = factory());
 }(this, (function () { 'use strict';
 
-var index = {
-  render: function (h) { return h(); },
-  mounted: function mounted () {
-  	var this$1 = this;
+var modifiersRE = /^[~!&]*/;
+var nonEventNameCharsRE = /\W+/;
+var names = {
+  '!': 'capture',
+  '~': 'once',
+  '&': 'passive'
+};
 
-  	this._listeners = Object.create(null);
+function extractEventOptions (eventDescriptor) {
+  var ref = eventDescriptor.match(modifiersRE);
+  var modifiers = ref[0];
+  return modifiers.split('').reduce(function (options, modifier) {
+    options[names[modifier]] = true;
+    return options
+  }, {})
+}
+
+var index = {
+  name: 'GlobalEvents',
+  props: {
+    filter: {
+      type: Function,
+      default: function (e) { return true; }
+    }
+  },
+
+  render: function (h) { return h(); },
+
+  mounted: function mounted () {
+    var this$1 = this;
+
+    this._listeners = Object.create(null);
     Object.keys(this.$listeners).forEach(function (event) {
-    	var handler = this$1.$listeners[event];
-      document.addEventListener(event, handler);
+      var listener = this$1.$listeners[event];
+      var handler = function (e) {
+        this$1.filter(e, listener, event) && listener(e);
+      };
+      document.addEventListener(
+        event.replace(nonEventNameCharsRE, ''),
+        handler,
+        extractEventOptions(event)
+      );
       this$1._listeners[event] = handler;
     });
   },
+
   beforeDestroy: function beforeDestroy () {
     var this$1 = this;
 
     for (var event in this$1._listeners) {
-      document.removeEventListener(event, this$1._listeners[event]);
+      document.removeEventListener(
+        event.replace(nonEventNameCharsRE, ''),
+        this$1._listeners[event]
+      );
     }
   }
 };
