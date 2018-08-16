@@ -70,6 +70,7 @@ In the example above `event` would be the native `keyup` [Event Object](https://
 - Do not use shortcuts that are used by the system or that the browser **does not allow you to `.preventDefault()`**. The list includes `Ctrl+Tab`/`Cmd+Tab`, `Ctrl+W`/`Cmd+W`. You can find more information [in this StackOverflow answer](https://stackoverflow.com/a/40434403/3384501).
 - Prefer using actual characters to keyCodes whenever possible: `@keydown.+` for detecting the plus sign. This is important because symbols and numbers on the digit row will provide different keyCodes depending on the layout used.
 - You can add custom keyCodes to `Vue.config.keyCodes`. This is especially useful for numbers on the digit row: add `Vue.config.keyCodes.digit1 = 49` so you can write `@keydown.digit1` because writing `@keydown.1` will trigger when `keyCode === 1`.
+- About using `keyup` with modifiers like `.ctrl` or `.shift`: the keyup event is triggered when a key is released and that's also when the `event.ctrlKey` is checked, which if you just released, will be false. This is because `ctrl`, `shift` and `alt` are checked differently. If you want to trigger on the `keyup` event of a modifier, you need to use its keycode ([check it here](http://keycode.info). For example, for the `ctrl` key, that would be: `@keyup.17`. You can also use the advice above this one to provide it a name like _ctrlkey_.
 
 ## Development
 
