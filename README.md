@@ -19,7 +19,7 @@ We decided to change that, so now you can register global events (for example ap
 import GlobalEvents from 'vue-global-events'
 
 // register globally
-Vue.component(GlobalEvents)
+Vue.component('global-events', GlobalEvents)
 
 // or locally
 export default {
