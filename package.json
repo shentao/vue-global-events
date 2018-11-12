@@ -54,6 +54,7 @@
   },
   "homepage": "https://github.com/shentao/vue-global-events#readme",
   "devDependencies": {
+    "@vue/test-utils": "^1.0.0-beta.25",
     "babel-jest": "^23.6.0",
     "babel-preset-env": "^1.6.1",
     "codecov": "^3.0.0",
@@ -61,8 +62,7 @@
     "eslint-config-posva": "^2.0.3",
     "jest": "^23.6.0",
     "vue": "^2.5.17",
-    "vue-template-compiler": "^2.5.17",
-    "vue-test-utils": "^1.0.0-beta.6"
+    "vue-template-compiler": "^2.5.17"
   },
   "jest": {
     "transform": {

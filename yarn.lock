@@ -90,6 +90,13 @@
     lodash "^4.17.10"
     to-fast-properties "^2.0.0"
 
+"@vue/test-utils@^1.0.0-beta.25":
+  version "1.0.0-beta.25"
+  resolved "https://registry.yarnpkg.com/@vue/test-utils/-/test-utils-1.0.0-beta.25.tgz#4703076de3076bac42cdd242cd53e6fb8752ed8c"
+  integrity sha512-mfvguEmEpAn0BuT4u+qm+0J1NTKgQS+ffUyWHY1QeSovIkJcy98fj1rO+PJgiZSEvGjjnDNX+qmofYFPLrofbA==
+  dependencies:
+    lodash "^4.17.4"
+
 abab@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/abab/-/abab-2.0.0.tgz#aba0ab4c5eee2d4c79d3487d85450fb2376ebb0f"
@@ -4601,13 +4608,6 @@ vue-template-compiler@^2.5.17:
   dependencies:
     de-indent "^1.0.2"
     he "^1.1.0"
-
-vue-test-utils@^1.0.0-beta.6:
-  version "1.0.0-beta.11"
-  resolved "https://registry.yarnpkg.com/vue-test-utils/-/vue-test-utils-1.0.0-beta.11.tgz#41b7fa53e0061d16ecbe18cfeea197c909d4ab8a"
-  integrity sha512-KTBx60NtuKAXyMkl798kyCUThqExeCSB4MJk/J+wQp3+ul3HKVgN1ngx4NFu0Py9gJyIwat5EgV+EOJGRvS4xQ==
-  dependencies:
-    lodash "^4.17.4"
 
 vue@^2.5.17:
   version "2.5.17"

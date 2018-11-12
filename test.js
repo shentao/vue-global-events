@@ -1,4 +1,4 @@
-import { mount } from 'vue-test-utils'
+import { mount } from '@vue/test-utils'
 import GlobalEvents from './src'
 
 describe('GlobalEvents', () => {
@@ -23,10 +23,6 @@ describe('GlobalEvents', () => {
 
     expect(keydown).toHaveBeenCalledTimes(1)
     expect(callcontext).not.toHaveBeenCalled()
-
-    wrapper.trigger('keydown')
-
-    expect(keydown).toHaveBeenCalledTimes(1)
   })
 
   test('filter out events', () => {
@@ -65,7 +61,10 @@ describe('GlobalEvents', () => {
     document.dispatchEvent(event)
     expect(keydown).not.toHaveBeenCalled()
 
-    expect(filter).toHaveBeenCalledWith(event, keydown, 'keydown')
+    // Vue will wrap the keydown listener, that's why we are checking for fns
+    expect(filter).toHaveBeenCalledWith(event, expect.objectContaining({
+      fns: keydown
+    }), 'keydown')
   })
 
   test('cleans up events', () => {
