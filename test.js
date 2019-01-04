@@ -7,6 +7,12 @@ jest.mock('./src/utils')
 
 describe('GlobalEvents', () => {
   let wrapper
+  beforeAll(() => {
+    global.window = global
+  })
+  afterAll(() => {
+    delete global.window
+  })
   afterEach(() => {
     wrapper.destroy()
   })
@@ -203,5 +209,25 @@ describe('GlobalEvents', () => {
     expect(document.addEventListener.mock.calls[0][2]).toEqual(true)
     expect(document.addEventListener.mock.calls[1][2]).toEqual(false)
     document.addEventListener.mockRestore()
+  })
+
+  test('support different targets', () => {
+    const keydown = jest.fn()
+    jest.spyOn(global.window, 'addEventListener')
+    mount(GlobalEvents, {
+      propsData: {
+        target: 'window'
+      },
+      listeners: {
+        '~!keydown': keydown
+      }
+    })
+
+    expect(global.window.addEventListener).toHaveBeenCalledWith(
+      'keydown',
+      expect.any(Function),
+      { capture: true, once: true }
+    )
+    global.window.addEventListener.mockRestore()
   })
 })

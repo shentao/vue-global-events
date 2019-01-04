@@ -26,6 +26,10 @@ function extractEventOptions (eventDescriptor) {
 export default {
   name: 'GlobalEvents',
   props: {
+    target: {
+      type: String,
+      default: 'document'
+    },
     filter: {
       type: Function,
       default: e => true
@@ -41,7 +45,7 @@ export default {
       const handler = e => {
         this.filter(e, listener, event) && listener(e)
       }
-      document.addEventListener(
+      window[this.target].addEventListener(
         event.replace(nonEventNameCharsRE, ''),
         handler,
         extractEventOptions(event)
@@ -52,7 +56,7 @@ export default {
 
   beforeDestroy () {
     for (const event in this._listeners) {
-      document.removeEventListener(
+      window[this.target].removeEventListener(
         event.replace(nonEventNameCharsRE, ''),
         this._listeners[event]
       )
