@@ -68,7 +68,7 @@ Function to prevent any event from being executed based on anything related to t
 
 In the example above `event` would be the native `keyup` [Event Object](https://developer.mozilla.org/en-US/docs/Web/API/Event), `handler` would be the method `nextTab` and `eventName` would be the string `keyup`. `eventName` can contain [key modifiers](https://vuejs.org/v2/guide/render-function.html#Event-amp-Key-Modifiers) if used
 
-#### target
+#### `target`
 
 Target element where `addEventListener` is called on. It's a String that refers to a global variable like `document` or `window`. This allows you to add events to the `window` instead of `document`.
 
