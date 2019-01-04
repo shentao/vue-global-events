@@ -11,9 +11,7 @@ function isSupportPassive () {
   const options = Object.defineProperty({}, 'passive', {
     get: () => (passive = true)
   })
-
   document.addEventListener('test', null, options)
-
   return passive
 }
 
@@ -23,7 +21,6 @@ function extractEventOptions (eventDescriptor) {
     options[names[modifier]] = true
     return options
   }, {})
-
   return isSupportPassive() ? eventOptions : eventOptions.capture
 }
 

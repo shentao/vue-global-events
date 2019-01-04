@@ -181,6 +181,7 @@ describe('GlobalEvents', () => {
     })
     document.addEventListener.mockRestore()
   })
+
   test('not supports passive modifier for IE', () => {
     const keydown = jest.fn()
     document.addEventListener = jest.fn()
