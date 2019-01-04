@@ -6,12 +6,25 @@ const names = {
   '&': 'passive'
 }
 
+function isSupportPassive () {
+  let passive = false
+  const options = Object.defineProperty({}, 'passive', {
+    get: () => (passive = true)
+  })
+
+  document.addEventListener('test', null, options)
+
+  return passive
+}
+
 function extractEventOptions (eventDescriptor) {
   const [modifiers] = eventDescriptor.match(modifiersRE)
-  return modifiers.split('').reduce((options, modifier) => {
+  const eventOptions = modifiers.split('').reduce((options, modifier) => {
     options[names[modifier]] = true
     return options
   }, {})
+
+  return isSupportPassive() ? eventOptions : eventOptions.capture
 }
 
 export default {
