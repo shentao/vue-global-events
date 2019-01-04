@@ -7,10 +7,9 @@
   "unpkg": "dist/vue-global-events.js",
   "browser": "dist/vue-global-events.es.js",
   "files": [
-    "README.md",
     "LICENSE",
-    "dist/**",
-    "src/**"
+    "dist/*",
+    "src/*"
   ],
   "scripts": {
     "test": "jest --coverage",
