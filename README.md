@@ -3,6 +3,7 @@
 > Add shortcuts by listening to events on the document, anywhere
 
 ## Installation
+
 ```bash
 npm install vue-global-events
 ```
@@ -10,6 +11,7 @@ npm install vue-global-events
 ## [Demo](https://jsfiddle.net/posva/qk6hr1k4/)
 
 ## Idea
+
 Thanks to Vue’s event modifiers, handling events is extremely easy however, you’re limited to DOM element events.
 We decided to change that, so now you can register global events (for example application shortcuts) just like you would listen to events on a component. No need to worry about unregistration either. You can toggle the events with a single `v-if`. Works with SSR too.
 
@@ -44,6 +46,8 @@ After that you can register global events like this:
 
 #### `filter`
 
+Function to prevent any event from being executed based on anything related to the event like the element that triggered it, the name, or the handler.
+
 - type: `Function`
 - default: `() => true`
 
@@ -63,6 +67,19 @@ After that you can register global events like this:
 ```
 
 In the example above `event` would be the native `keyup` [Event Object](https://developer.mozilla.org/en-US/docs/Web/API/Event), `handler` would be the method `nextTab` and `eventName` would be the string `keyup`. `eventName` can contain [key modifiers](https://vuejs.org/v2/guide/render-function.html#Event-amp-Key-Modifiers) if used
+
+#### target
+
+Target element where `addEventListener` is called on. It's a String that refers to a global variable like `document` or `window`. This allows you to add events to the `window` instead of `document`.
+
+- type: `String`
+- default: `'document'`
+
+_Warning_: This prop is not reactive. It should be provided as a static value. If you need it to be reactive, add a `key` attribute with the same value:
+
+```html
+<GlobalEvents :target="target" :key="target" />
+```
 
 ## Advice / Caveats
 
