@@ -1,11 +1,11 @@
 {
   "name": "vue-global-events",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Component to register global events",
   "main": "dist/vue-global-events.cjs.js",
   "module": "dist/vue-global-events.es.js",
   "unpkg": "dist/vue-global-events.js",
-  "browser": "dist/vue-global-events.js",
+  "browser": "dist/vue-global-events.es.js",
   "files": [
     "README.md",
     "LICENSE",

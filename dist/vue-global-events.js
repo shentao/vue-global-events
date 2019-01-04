@@ -1,6 +1,6 @@
 /**
- * vue-global-events v1.0.2
- * (c) 2018 Damian Dulisz <damian.dulisz@gmail.com>
+ * vue-global-events v1.0.4
+ * (c) 2019 Damian Dulisz <damian.dulisz@gmail.com>, Eduardo San Martin Morote <posva13@gmail.com>
  * @license MIT
  */
 
@@ -9,6 +9,13 @@
 	typeof define === 'function' && define.amd ? define(factory) :
 	(global.VueGlobalEvents = factory());
 }(this, (function () { 'use strict';
+
+var _isIE;
+function isIE () {
+  return _isIE == null
+    ? (_isIE = /msie|trident/.test(window.navigator.userAgent.toLowerCase()))
+    : _isIE
+}
 
 var modifiersRE = /^[~!&]*/;
 var nonEventNameCharsRE = /\W+/;
@@ -21,6 +28,13 @@ var names = {
 function extractEventOptions (eventDescriptor) {
   var ref = eventDescriptor.match(modifiersRE);
   var modifiers = ref[0];
+
+  // IE only supports capture option and it has to be a boolean
+  // https://github.com/shentao/vue-global-events/issues/14
+  if (isIE()) {
+    return modifiers.indexOf('!') > -1
+  }
+
   return modifiers.split('').reduce(function (options, modifier) {
     options[names[modifier]] = true;
     return options
