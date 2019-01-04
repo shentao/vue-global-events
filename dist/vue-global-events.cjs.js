@@ -1,5 +1,5 @@
 /**
- * vue-global-events v1.0.4
+ * vue-global-events v1.1.0
  * (c) 2019 Damian Dulisz <damian.dulisz@gmail.com>, Eduardo San Martin Morote <posva13@gmail.com>
  * @license MIT
  */
@@ -40,6 +40,10 @@ function extractEventOptions (eventDescriptor) {
 var index = {
   name: 'GlobalEvents',
   props: {
+    target: {
+      type: String,
+      default: 'document'
+    },
     filter: {
       type: Function,
       default: function (e) { return true; }
@@ -57,7 +61,7 @@ var index = {
       var handler = function (e) {
         this$1.filter(e, listener, event) && listener(e);
       };
-      document.addEventListener(
+      window[this$1.target].addEventListener(
         event.replace(nonEventNameCharsRE, ''),
         handler,
         extractEventOptions(event)
@@ -70,7 +74,7 @@ var index = {
     var this$1 = this;
 
     for (var event in this$1._listeners) {
-      document.removeEventListener(
+      window[this$1.target].removeEventListener(
         event.replace(nonEventNameCharsRE, ''),
         this$1._listeners[event]
       );
