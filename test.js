@@ -1,5 +1,9 @@
 import { mount } from '@vue/test-utils'
 import GlobalEvents from './src'
+// eslint-disable-next-line import/default
+import ie from './src/utils'
+
+jest.mock('./src/utils')
 
 describe('GlobalEvents', () => {
   let wrapper
@@ -62,9 +66,13 @@ describe('GlobalEvents', () => {
     expect(keydown).not.toHaveBeenCalled()
 
     // Vue will wrap the keydown listener, that's why we are checking for fns
-    expect(filter).toHaveBeenCalledWith(event, expect.objectContaining({
-      fns: keydown
-    }), 'keydown')
+    expect(filter).toHaveBeenCalledWith(
+      event,
+      expect.objectContaining({
+        fns: keydown
+      }),
+      'keydown'
+    )
   })
 
   test('cleans up events', () => {
@@ -175,6 +183,25 @@ describe('GlobalEvents', () => {
       capture: true,
       once: true
     })
+    document.addEventListener.mockRestore()
+  })
+
+  test('passes a boolean instead of object if IE', () => {
+    const keydown = jest.fn()
+    document.addEventListener = jest.fn()
+    // eslint-disable-next-line import/namespace
+    ie.value = true
+    mount(GlobalEvents, {
+      listeners: {
+        '~!keydown': keydown,
+        '~keydown': keydown
+      }
+    })
+    // eslint-disable-next-line import/namespace
+    ie.value = false
+
+    expect(document.addEventListener.mock.calls[0][2]).toEqual(true)
+    expect(document.addEventListener.mock.calls[1][2]).toEqual(false)
     document.addEventListener.mockRestore()
   })
 })

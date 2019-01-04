@@ -1,3 +1,5 @@
+import { isIE } from './utils'
+
 const modifiersRE = /^[~!&]*/
 const nonEventNameCharsRE = /\W+/
 const names = {
@@ -8,6 +10,13 @@ const names = {
 
 function extractEventOptions (eventDescriptor) {
   const [modifiers] = eventDescriptor.match(modifiersRE)
+
+  // IE only supports capture option and it has to be a boolean
+  // https://github.com/shentao/vue-global-events/issues/14
+  if (isIE()) {
+    return modifiers.indexOf('!') > -1
+  }
+
   return modifiers.split('').reduce((options, modifier) => {
     options[names[modifier]] = true
     return options
