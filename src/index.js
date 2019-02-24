@@ -58,7 +58,8 @@ export default {
     for (const event in this._listeners) {
       window[this.target].removeEventListener(
         event.replace(nonEventNameCharsRE, ''),
-        this._listeners[event]
+        this._listeners[event],
+        extractEventOptions(event)
       )
     }
   }

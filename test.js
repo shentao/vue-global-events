@@ -114,6 +114,7 @@ describe('GlobalEvents', () => {
     wrapper.destroy()
 
     expect(document.removeEventListener.mock.calls[0][0]).toBe('keydown')
+    expect(document.removeEventListener.mock.calls[0][2]).toEqual({ capture: true })
 
     document.removeEventListener.mockRestore()
   })
