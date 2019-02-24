@@ -1,6 +1,6 @@
 /**
- * vue-global-events v1.1.0
- * (c) 2019 Damian Dulisz <damian.dulisz@gmail.com>, Eduardo San Martin Morote <posva13@gmail.com>
+ * vue-global-events v1.1.1
+ * (c) 2019 Damian Dulisz <damian.dulisz@gmail.com>
  * @license MIT
  */
 
@@ -80,7 +80,8 @@ var index = {
     for (var event in this$1._listeners) {
       window[this$1.target].removeEventListener(
         event.replace(nonEventNameCharsRE, ''),
-        this$1._listeners[event]
+        this$1._listeners[event],
+        extractEventOptions(event)
       );
     }
   }
