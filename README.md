@@ -61,7 +61,7 @@ Function to prevent any event from being executed based on anything related to t
 
 ```html
 <GlobalEvents
-  :filter="(event, handler, eventName) => event.target.tagName !== 'INPUT'"
+  :filter="(event, handler, eventName) => event.target.nodeName !== 'INPUT'"
   @keyup.prevent.space.exact="nextTab"
 />
 ```
