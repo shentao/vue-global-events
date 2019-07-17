@@ -56,12 +56,12 @@
     "@vue/test-utils": "^1.0.0-beta.25",
     "babel-jest": "^23.6.0",
     "babel-preset-env": "^1.6.1",
-    "codecov": "^3.0.0",
-    "eslint": "^5.9.0",
-    "eslint-config-posva": "^2.0.3",
+    "codecov": "^3.5.0",
+    "eslint": "^6.0.1",
+    "eslint-config-posva": "^3.0.1",
     "jest": "^23.6.0",
-    "vue": "^2.5.17",
-    "vue-template-compiler": "^2.5.17"
+    "vue": "^2.6.10",
+    "vue-template-compiler": "^2.6.10"
   },
   "jest": {
     "transform": {
