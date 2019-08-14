@@ -40,8 +40,7 @@ export default {
 
   mounted () {
     this._listeners = Object.create(null)
-    Object.keys(this.$listeners).forEach(event => {
-      const listener = this.$listeners[event]
+    Object.entries(this.$listeners).forEach(([event, listener]) => {
       const handler = e => {
         this.filter(e, listener, event) && listener(e)
       }
