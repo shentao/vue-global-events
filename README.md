@@ -4,22 +4,6 @@
 
 ## Sponsors
 
-### Gold
-
-<p align="center">
-  <a href="https://us.vuejs.org/?utm_campaign=Vue.js%20News&utm_medium=email&utm_source=Revue%20newsletter" target="_blank">
-    <img src="https://cdn.discordapp.com/attachments/560524372897562636/636900780481445888/ef278f141a55e3f44f50b8dbc1f9ca17.png" alt="VueConf.us" width="260px">
-  </a>
-</p>
-
-### Silver
-
-<p align="center">
-  <a href="https://www.nativescript.org/vue?utm_source=vuejsnewsletter&utm_medium=email&utm_campaign=nativescript-awareness" target="_blank">
-    <img src="https://cdn.discordapp.com/attachments/491313387129667594/602523039229542400/nativescript-logo.png" alt="NativeScript" width="170px">
-  </a>
-</p>
-
 ### Bronze
 
 <p align="center">
@@ -27,7 +11,7 @@
     <img src="https://cdn.discordapp.com/attachments/258614093362102272/557267759130607630/Vue-Mastery-Big.png" alt="Vue Mastery logo" width="180px">
   </a>
   <a href="https://vuejobs.com/" target="_blank">
-    <img src="https://cdn.discordapp.com/attachments/560524372897562636/636900598700179456/vuejobs-logo.png" alt="Vue Mastery logo" width="140px">
+    <img src="https://cdn.discordapp.com/attachments/560524372897562636/636900598700179456/vuejobs-logo.png" alt="Vue Jobs logo" width="140px">
   </a>
 </p>
 
