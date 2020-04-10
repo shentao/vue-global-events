@@ -64,7 +64,7 @@ Function to prevent any event from being executed based on anything related to t
 - type: `Function`
 - default: `() => true`
 
-##### arguments
+##### Arguments
 
 - `event`: Native Event Object
 - `handler`: method passed to `GlobalEvents` component
@@ -83,12 +83,40 @@ In the example above `event` would be the native `keyup` [Event Object](https://
 
 #### `target`
 
-Target element where `addEventListener` is called on. It's a String that refers to a global variable like `document` or `window`. This allows you to add events to the `window` instead of `document`.
+Target element where `addEventListener` is called on:
 
-- type: `String`
+- type: `String` | `HTMLElement`
 - default: `'document'`
 
-_Warning_: This prop is not reactive. It should be provided as a static value. If you need it to be reactive, add a `key` attribute with the same value:
+##### Options
+
+A String reference to the global objects `window` or `document`
+
+```
+target="window"
+```
+
+The String keyword `$parent` to refer to the current component:
+
+```
+target="$parent"
+```
+
+A String CSS selector that refers to an element within the current component:
+
+```
+target="textarea"
+```
+
+An Element reference to any local HTML element:
+
+```
+:target="$refs.textarea"
+```
+
+Note that refs do not seem to work with the `.stop` modifier.
+
+*Warning:* This prop is not reactive. It should be provided as a static value. If you need it to be reactive, add a `key` attribute with the same value:
 
 ```html
 <GlobalEvents :target="target" :key="target" />
@@ -97,6 +125,7 @@ _Warning_: This prop is not reactive. It should be provided as a static value. I
 ## Advice / Caveats
 
 - Always `.prevent` events with `.ctrl` and other modifiers as browsers may be using them as shortcuts.
+- Generally use `.stop` when targeting the current component using `target="$parent"`or else the event will continue to bubble. Altenernatively, you can manually choose to call `event.stopImmediatePropagation()` in the event handler.
 - Do not use shortcuts that are used by the system or that the browser **does not allow you to `.preventDefault()`**. The list includes `Ctrl+Tab`/`Cmd+Tab`, `Ctrl+W`/`Cmd+W`. You can find more information [in this StackOverflow answer](https://stackoverflow.com/a/40434403/3384501).
 - Prefer using actual characters to keyCodes whenever possible: `@keydown.+` for detecting the plus sign. This is important because symbols and numbers on the digit row will provide different keyCodes depending on the layout used.
 - You can add custom keyCodes to `Vue.config.keyCodes`. This is especially useful for numbers on the digit row: add `Vue.config.keyCodes.digit1 = 49` so you can write `@keydown.digit1` because writing `@keydown.1` will trigger when `keyCode === 1`.
