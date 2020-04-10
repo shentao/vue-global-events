@@ -23,11 +23,26 @@ function extractEventOptions (eventDescriptor) {
   }, {})
 }
 
+function getTarget (context) {
+  const target = context.target
+  if (typeof target === 'string') {
+    if (/^(window|document)$/.test(target)) {
+      return window[target]
+    }
+    const $el = context.$parent.$el
+    if (target === '$parent') {
+      return $el
+    }
+    return $el.querySelector(target)
+  }
+  return target
+}
+
 export default {
   name: 'GlobalEvents',
   props: {
     target: {
-      type: String,
+      type: [String, HTMLElement],
       default: 'document'
     },
     filter: {
@@ -40,12 +55,13 @@ export default {
 
   mounted () {
     this._listeners = Object.create(null)
+    const target = getTarget(this)
     Object.keys(this.$listeners).forEach(event => {
       const listener = this.$listeners[event]
       const handler = e => {
         this.filter(e, listener, event) && listener(e)
       }
-      window[this.target].addEventListener(
+      target.addEventListener(
         event.replace(nonEventNameCharsRE, ''),
         handler,
         extractEventOptions(event)
@@ -55,8 +71,9 @@ export default {
   },
 
   beforeDestroy () {
+    const target = getTarget(this)
     for (const event in this._listeners) {
-      window[this.target].removeEventListener(
+      target.removeEventListener(
         event.replace(nonEventNameCharsRE, ''),
         this._listeners[event],
         extractEventOptions(event)
