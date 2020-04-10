@@ -118,7 +118,7 @@ Just use [poi](https://github.com/egoist/poi)
 # if not yet installed
 npm i -g poi
 
-poi index.js
+poi demo --serve
 ```
 
 ## Authors:
