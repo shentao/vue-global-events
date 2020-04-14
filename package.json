@@ -61,6 +61,7 @@
     "eslint": "^6.2.2",
     "eslint-config-posva": "^3.0.2",
     "jest": "^25.1.0",
+    "rollit": "^0.0.9",
     "vue": "^2.6.10",
     "vue-template-compiler": "^2.6.10"
   },
