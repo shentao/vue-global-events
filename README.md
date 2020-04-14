@@ -112,16 +112,15 @@ npm run dev
 
 ## Demo
 
-Just use [poi](https://github.com/egoist/poi)
+Build the library with:
 
 ```bash
-# if not yet installed
-npm i -g poi
-
-poi index.js
+npm run build
 ```
 
-## Authors:
+And then open the `index.html` file
+
+## Authors
 
 Damian Dulisz [@shentao](https://github.com/shentao)
 

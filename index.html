@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue Global Events</title>
+
+    <style>
+      * {
+        font-family: sans-serif;
+      }
+
+      dt {
+        font-weight: bold;
+        font-size: 14px;
+      }
+
+      dd {
+        margin: 0 0 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="https://unpkg.com/vue@2.6.11/dist/vue.js"></script>
+    <script src="dist/vue-global-events.js"></script>
+
+    <div id="app">
+      <global-events
+        @keydown.prevent.ctrl.digit1="minusOne"
+        @keydown.prevent.ctrl.digit2="plusOne"
+        @keydown.prevent.ctrl.-="minusOne"
+        @keydown.prevent.ctrl.57="plusOne"
+        @keydown.space.exact="reset"
+        @click="plusOne"
+        @contextmenu.prevent="minusOne"
+      ></global-events>
+      <h1>
+        {{ counter }}
+      </h1>
+      <dl>
+        <dt>Ctrl++ (plus sign), Left Mouse Click, Ctrl+2</dt>
+        <dd>Increase counter</dd>
+        <dt>Ctrl+- (minus sign), Right Mouse Click, Ctrl+1</dt>
+        <dd>Increase counter</dd>
+        <dt>Space only (no control, alt, etc)</dt>
+        <dd>Reset counter</dd>
+      </dl>
+    </div>
+
+    <script>
+      // Define custom keyCodes for digits 1 and 2 as it's not possible to
+      // write @keydown.1 because it will be considered as a keyCode
+      // instead of the actual character 1
+      Vue.config.keyCodes.digit1 = 49
+      Vue.config.keyCodes.digit2 = 50
+
+      vm = new Vue({
+        el: '#app',
+        components: {
+          GlobalEvents: VueGlobalEvents,
+        },
+        data: {
+          counter: 0,
+        },
+        methods: {
+          plusOne() {
+            this.counter++
+          },
+          minusOne() {
+            this.counter--
+          },
+          reset() {
+            this.counter = 0
+          },
+        },
+
+        mounted() {},
+      })
+    </script>
+  </body>
+</html>
