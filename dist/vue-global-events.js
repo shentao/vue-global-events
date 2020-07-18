@@ -1,6 +1,6 @@
 /**
  * vue-global-events v1.1.2
- * (c) 2019 Damian Dulisz <damian.dulisz@gmail.com>, Eduardo San Martin Morote <posva13@gmail.com>
+ * (c) 2020 Damian Dulisz <damian.dulisz@gmail.com>, Eduardo San Martin Morote <posva13@gmail.com>
  * @license MIT
  */
 
@@ -54,27 +54,32 @@ var index = {
     }
   },
 
-  render: function (h) { return h(); },
+  render: function () { return null; },
 
   mounted: function mounted () {
     var this$1 = this;
 
     this._listeners = Object.create(null);
-    Object.keys(this.$listeners).forEach(function (event) {
-      var listener = this$1.$listeners[event];
-      var handler = function (e) {
-        this$1.filter(e, listener, event) && listener(e);
-      };
-      window[this$1.target].addEventListener(
-        event.replace(nonEventNameCharsRE, ''),
-        handler,
-        extractEventOptions(event)
-      );
-      this$1._listeners[event] = handler;
-    });
+    // @TODO move this regex out of mounted
+    var regex = /^on[A-Z]/;
+    Object.keys(this.$attrs)
+      .filter(function (attr) { return regex.test(attr); })
+      .forEach(function (attr) {
+        var listener = this$1.$attrs[attr];
+        var event = attr.slice(2).toLowerCase();
+        var handler = function (e) {
+          this$1.filter(e, listener, event) && listener(e);
+        };
+        window[this$1.target].addEventListener(
+          event.replace(nonEventNameCharsRE, ''),
+          handler,
+          extractEventOptions(event)
+        );
+        this$1._listeners[event] = handler;
+      });
   },
 
-  beforeDestroy: function beforeDestroy () {
+  beforeUnmount: function beforeUnmount () {
     var this$1 = this;
 
     for (var event in this$1._listeners) {
