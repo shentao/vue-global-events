@@ -36,25 +36,30 @@ export default {
     }
   },
 
-  render: h => h(),
+  render: () => null,
 
   mounted () {
     this._listeners = Object.create(null)
-    Object.keys(this.$listeners).forEach(event => {
-      const listener = this.$listeners[event]
-      const handler = e => {
-        this.filter(e, listener, event) && listener(e)
-      }
-      window[this.target].addEventListener(
-        event.replace(nonEventNameCharsRE, ''),
-        handler,
-        extractEventOptions(event)
-      )
-      this._listeners[event] = handler
-    })
+    // @TODO move this regex out of mounted
+    const regex = /^on[A-Z]/
+    Object.keys(this.$attrs)
+      .filter(attr => regex.test(attr))
+      .forEach(attr => {
+        const listener = this.$attrs[attr]
+        const event = attr.slice(2).toLowerCase()
+        const handler = e => {
+          this.filter(e, listener, event) && listener(e)
+        }
+        window[this.target].addEventListener(
+          event.replace(nonEventNameCharsRE, ''),
+          handler,
+          extractEventOptions(event)
+        )
+        this._listeners[event] = handler
+      })
   },
 
-  beforeDestroy () {
+  beforeUnmount () {
     for (const event in this._listeners) {
       window[this.target].removeEventListener(
         event.replace(nonEventNameCharsRE, ''),
