@@ -17,7 +17,7 @@ function getAuthors(pkg) {
     })
   if (author) authors.add(author.name)
 
-  return Array.from(authors).join(' ')
+  return Array.from(authors).join(', ')
 }
 
 const banner = `/*!

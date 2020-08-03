@@ -1,7 +1,7 @@
 {
   "name": "vue-global-events",
-  "version": "0.0.0",
-  "description": "Some awesome description",
+  "version": "2.0.0",
+  "description": "Register global events using vue template shortcuts",
   "main": "dist/vue-global-events.cjs.js",
   "browser": "dist/vue-global-events.esm.js",
   "unpkg": "dist/vue-global-events.global.js",
@@ -9,10 +9,6 @@
   "module": "dist/vue-global-events.esm-bundler.js",
   "types": "dist/vue-global-events.d.ts",
   "sideEffects": false,
-  "author": {
-    "name": "Eduardo San Martin Morote",
-    "email": "posva13@gmail.com"
-  },
   "scripts": {
     "build": "rollup -c rollup.config.js",
     "build:dts": "api-extractor run --local --verbose",
@@ -31,7 +27,30 @@
     "LICENSE",
     "README.md"
   ],
-  "keywords": [],
+  "keywords": [
+    "vue",
+    "events",
+    "global",
+    "window",
+    "document",
+    "shortcuts",
+    "anywhere",
+    "listeners"
+  ],
+  "author": {
+    "name": "Damian Dulisz",
+    "email": "damian.dulisz@gmail.com"
+  },
+  "contributors": [
+    {
+      "name": "Damian Dulisz",
+      "email": "damian.dulisz@gmail.com"
+    },
+    {
+      "name": "Eduardo San Martin Morote",
+      "email": "posva13@gmail.com"
+    }
+  ],
   "license": "MIT",
   "devDependencies": {
     "@microsoft/api-extractor": "7.8.1",
