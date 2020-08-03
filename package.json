@@ -1,13 +1,13 @@
 {
-  "name": "vue-lib",
+  "name": "vue-global-events",
   "version": "0.0.0",
   "description": "Some awesome description",
-  "main": "dist/vue-lib.cjs.js",
-  "browser": "dist/vue-lib.esm.js",
-  "unpkg": "dist/vue-lib.global.js",
-  "jsdelivr": "dist/vue-lib.global.js",
-  "module": "dist/vue-lib.esm-bundler.js",
-  "types": "dist/vue-lib.d.ts",
+  "main": "dist/vue-global-events.cjs.js",
+  "browser": "dist/vue-global-events.esm.js",
+  "unpkg": "dist/vue-global-events.global.js",
+  "jsdelivr": "dist/vue-global-events.global.js",
+  "module": "dist/vue-global-events.esm-bundler.js",
+  "types": "dist/vue-global-events.d.ts",
   "sideEffects": false,
   "author": {
     "name": "Eduardo San Martin Morote",
@@ -27,7 +27,7 @@
   },
   "files": [
     "dist/*.js",
-    "dist/vue-lib.d.ts",
+    "dist/vue-global-events.d.ts",
     "LICENSE",
     "README.md"
   ],
@@ -82,10 +82,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/posva/vue-lib.git"
+    "url": "git+https://github.com/shentao/vue-global-events.git"
   },
   "bugs": {
-    "url": "https://github.com/posva/vue-lib/issues"
+    "url": "https://github.com/shentao/vue-global-events/issues"
   },
-  "homepage": "https://github.com/posva/vue-lib#readme"
+  "homepage": "https://github.com/shentao/vue-global-events#readme"
 }
