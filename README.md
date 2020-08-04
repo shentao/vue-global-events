@@ -22,7 +22,7 @@ yarn add vue-global-events
 npm install vue-global-events
 ```
 
-## [Demo](https://jsfiddle.net/posva/qk6hr1k4/)
+## [Demo](https://jsfiddle.net/posva/o4hj375r/)
 
 ## Idea
 
