@@ -27,6 +27,11 @@
     "LICENSE",
     "README.md"
   ],
+  "size-limit": [
+    {
+      "path": "size-check.js"
+    }
+  ],
   "keywords": [
     "vue",
     "events",
@@ -88,14 +93,6 @@
       "prettier --parser=typescript --write"
     ]
   },
-  "size-limit": [
-    {
-      "path": "size-checks/webRouter.js"
-    },
-    {
-      "path": "size-checks/webRouterAndVue.js"
-    }
-  ],
   "peerDependencies": {
     "vue": "^3.0.0-beta.20"
   },

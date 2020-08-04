@@ -1,4 +1,4 @@
-import { GlobalEventsImpl as GlobalEvents } from '../src'
+import { GlobalEventsImpl as GlobalEvents } from '../src/GlobalEvents'
 import { mount } from '@vue/test-utils'
 // @ts-ignore
 import ie from '../src/isIE'
