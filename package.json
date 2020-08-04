@@ -1,6 +1,6 @@
 {
   "name": "vue-global-events",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Register global events using vue template shortcuts",
   "main": "dist/vue-global-events.cjs.js",
   "browser": "dist/vue-global-events.esm.js",

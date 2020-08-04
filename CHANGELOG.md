@@ -1,3 +1,7 @@
+## [2.0.1](https://github.com/shentao/vue-global-events/compare/v2.0.0...v2.0.1) (2020-08-04)
+
+Fix global name
+
 # 2.0.0 (2020-08-04)
 
 ### Features
