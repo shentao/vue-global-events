@@ -58,30 +58,6 @@ After that you can register global events like this:
 
 ### Props
 
-#### `filter`
-
-Function to prevent any event from being executed based on anything related to the event like the element that triggered it, the name, or the handler.
-
-- type: `Function`
-- default: `() => true`
-
-##### arguments
-
-- `event`: Native Event Object
-- `handler`: method passed to `GlobalEvents` component
-- `eventName`: event name with [key modifiers](https://vuejs.org/v2/guide/render-function.html#Event-amp-Key-Modifiers)
-
-`filter` should return `false` to prevent the execution of a handler:
-
-```html
-<GlobalEvents
-  :filter="(event, handler, eventName) => event.target.tagName !== 'INPUT'"
-  @keyup.prevent.space.exact="nextTab"
-/>
-```
-
-In the example above `event` would be the native `keyup` [Event Object](https://developer.mozilla.org/en-US/docs/Web/API/Event), `handler` would be the method `nextTab` and `eventName` would be the string `keyup`. `eventName` can contain [key modifiers](https://vuejs.org/v2/guide/render-function.html#Event-amp-Key-Modifiers) if used
-
 #### `target`
 
 Target element where `addEventListener` is called on. It's a String that refers to a global variable like `document` or `window`. This allows you to add events to the `window` instead of `document`.
@@ -95,12 +71,35 @@ _Warning_: This prop is not reactive. It should be provided as a static value. I
 <GlobalEvents :target="target" :key="target" />
 ```
 
+#### `filter`
+
+Function to prevent any event from being executed based on anything related to the event like the element that triggered it, the name, or the handler.
+
+- type: `Function`
+- default: `() => true`
+
+##### arguments
+
+- `event`: Native Event Object
+- `handler`: method passed to `GlobalEvents` component
+- `eventName`: event name that was attached to the _target_ (See above)
+
+`filter` should return `false` to prevent the execution of a handler. For example, you can avoid the calls if the event is triggered by an `<input>`:
+
+```html
+<GlobalEvents
+  :filter="(event, handler, eventName) => event.target.tagName !== 'INPUT'"
+  @keyup.prevent.space.exact="nextTab"
+/>
+```
+
+In the example above `event` would be the native `keyup` [Event Object](https://developer.mozilla.org/en-US/docs/Web/API/Event), `handler` would be the method `nextTab` and `eventName` would be the string `keyup`.
+
 ## Advice / Caveats
 
 - Always `.prevent` events with `.ctrl` and other modifiers as browsers may be using them as shortcuts.
 - Do not use shortcuts that are used by the system or that the browser **does not allow you to `.preventDefault()`**. The list includes `Ctrl+Tab`/`Cmd+Tab`, `Ctrl+W`/`Cmd+W`. You can find more information [in this StackOverflow answer](https://stackoverflow.com/a/40434403/3384501).
 - Prefer using actual characters to keyCodes whenever possible: `@keydown.+` for detecting the plus sign. This is important because symbols and numbers on the digit row will provide different keyCodes depending on the layout used.
-- You can add custom keyCodes to `Vue.config.keyCodes`. This is especially useful for numbers on the digit row: add `Vue.config.keyCodes.digit1 = 49` so you can write `@keydown.digit1` because writing `@keydown.1` will trigger when `keyCode === 1`.
 - About using `keyup` with modifiers like `.ctrl` or `.shift`: the keyup event is triggered when a key is released and that's also when the `event.ctrlKey` is checked, which if you just released, will be false. This is because `ctrl`, `shift` and `alt` are checked differently. If you want to trigger on the `keyup` event of a modifier, you need to use its keycode ([check it here](http://keycode.info). For example, for the `ctrl` key, that would be: `@keyup.17`. You can also use the advice above this one to provide it a name like _ctrlkey_.
 
 ## Development
@@ -108,18 +107,8 @@ _Warning_: This prop is not reactive. It should be provided as a static value. I
 Run tests in watch mode:
 
 ```bash
-npm run dev
+yarn jest --watch
 ```
-
-## Demo
-
-Build the library with:
-
-```bash
-npm run build
-```
-
-And then open the `index.html` file
 
 ## Authors
 
