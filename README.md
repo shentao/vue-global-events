@@ -18,8 +18,8 @@
 ## Installation
 
 ```bash
-yarn add vue-global-events
-npm install vue-global-events
+yarn add vue-global-events@next
+npm install vue-global-events@next
 ```
 
 ## [Demo](https://jsfiddle.net/posva/o4hj375r/)
