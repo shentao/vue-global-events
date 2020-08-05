@@ -1,4 +1,4 @@
-# vue-global-events [![Build Status](https://img.shields.io/circleci/project/shentao/vue-global-events/master.svg)](https://circleci.com/gh/shentao/vue-global-events) [![npm package](https://img.shields.io/npm/v/vue-global-events.svg)](https://www.npmjs.com/package/vue-global-events) [![coverage](https://img.shields.io/codecov/c/github/shentao/vue-global-events.svg)](https://codecov.io/github/shentao/vue-global-events)
+# vue-global-events [![Build Status](https://img.shields.io/circleci/project/shentao/vue-global-events/next.svg)](https://circleci.com/gh/shentao/vue-global-events) [![npm package](https://img.shields.io/npm/v/vue-global-events/next.svg)](https://www.npmjs.com/package/vue-global-events)
 
 > Add shortcuts by listening to events on the document, anywhere
 
