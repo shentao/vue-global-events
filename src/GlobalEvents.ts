@@ -4,6 +4,9 @@ import {
   VNodeProps,
   onMounted,
   onBeforeUnmount,
+  ref,
+  onActivated,
+  onDeactivated,
 } from 'vue'
 import { isIE } from './isIE'
 
@@ -67,6 +70,14 @@ export const GlobalEventsImpl = defineComponent({
       [EventListener[], string, Options | undefined | boolean]
     > = Object.create(null)
 
+    const isActive = ref(true)
+    onActivated(() => {
+      isActive.value = true
+    })
+    onDeactivated(() => {
+      isActive.value = false
+    })
+
     onMounted(() => {
       Object.keys(attrs)
         .filter((name) => name.startsWith('on'))
@@ -91,7 +102,9 @@ export const GlobalEventsImpl = defineComponent({
 
           const handlers: EventListener[] = listeners.map(
             (listener) => (event) => {
-              props.filter(event, listener, eventName) && listener(event)
+              isActive.value &&
+                props.filter(event, listener, eventName) &&
+                listener(event)
             }
           )
 
