@@ -1,8 +1,8 @@
 module.exports = {
   preset: 'ts-jest',
-  env: 'jsdom',
+  testEnvironment: 'jsdom',
   collectCoverage: true,
-  collectCoverageFrom: ['<rootDir>/src/**/*.ts'],
+  collectCoverageFrom: ['<rootDir>/src/GlobalEvents.ts'],
   testMatch: ['<rootDir>/__tests__/**/*.spec.ts'],
   globals: {
     'ts-jest': {
