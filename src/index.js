@@ -32,18 +32,29 @@ export default {
     },
     filter: {
       type: Function,
-      default: e => true
+      default: (e) => true
     }
   },
 
-  render: h => h(),
+  // track keep-alive active state
+  data: () => ({ isActive: true }),
+  activated () {
+    console.log('activated')
+    this.isActive = true
+  },
+  deactivated () {
+    console.log('deactivated')
+    this.isActive = false
+  },
+
+  render: (h) => h(),
 
   mounted () {
     this._listeners = Object.create(null)
-    Object.keys(this.$listeners).forEach(event => {
+    Object.keys(this.$listeners).forEach((event) => {
       const listener = this.$listeners[event]
-      const handler = e => {
-        this.filter(e, listener, event) && listener(e)
+      const handler = (e) => {
+        this.isActive && this.filter(e, listener, event) && listener(e)
       }
       window[this.target].addEventListener(
         event.replace(nonEventNameCharsRE, ''),

@@ -5,6 +5,19 @@ import ie from './src/utils'
 
 jest.mock('./src/utils')
 
+const TestWrapper = (name, fn) =>
+  ({
+    template: `
+ <keep-alive>
+   <GlobalEvents @${name}="fn" v-if="active" />
+ </keep-alive>
+   `,
+
+    components: { GlobalEvents },
+    data: () => ({ active: true }),
+    methods: { fn }
+  })
+
 describe('GlobalEvents', () => {
   let wrapper
   beforeAll(() => {
@@ -230,5 +243,25 @@ describe('GlobalEvents', () => {
       { capture: true, once: true }
     )
     global.window.addEventListener.mockRestore()
+  })
+
+  // doesn't work when run with the others...
+  test.skip('skips events when deactivated', async () => {
+    const onKeydown = jest.fn()
+    const wrapper = mount(TestWrapper('keydown', onKeydown))
+
+    wrapper.vm.active = false
+    await wrapper.vm.$nextTick()
+
+    document.dispatchEvent(new Event('keydown'))
+    expect(onKeydown).not.toHaveBeenCalled()
+
+    wrapper.vm.active = true
+    await wrapper.vm.$nextTick()
+
+    expect(onKeydown).not.toHaveBeenCalled()
+    document.dispatchEvent(new Event('keydown'))
+    console.log('keydown')
+    expect(onKeydown).toHaveBeenCalledTimes(1)
   })
 })

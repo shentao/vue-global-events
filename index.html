@@ -34,6 +34,12 @@
         @click="plusOne"
         @contextmenu.prevent="minusOne"
       ></global-events>
+      <keep-alive>
+        <global-events v-if="active" @keydown.enter.exact="counter = 100"></global-events>
+      </keep-alive>
+      <label>
+        <input type="checkbox" v-model="active"> is Enter key active
+      </label>
       <h1>
         {{ counter }}
       </h1>
@@ -61,6 +67,7 @@
         },
         data: {
           counter: 0,
+          active: true,
         },
         methods: {
           plusOne() {
