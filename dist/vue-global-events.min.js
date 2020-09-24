@@ -1,5 +1,5 @@
 /**
- * vue-global-events v1.2.0
+ * vue-global-events v1.2.1
  * (c) 2020 Damian Dulisz <damian.dulisz@gmail.com>, Eduardo San Martin Morote <posva13@gmail.com>
  * @license MIT
  */
