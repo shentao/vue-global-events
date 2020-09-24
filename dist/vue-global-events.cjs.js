@@ -1,6 +1,6 @@
 /**
- * vue-global-events v1.1.2
- * (c) 2019 Damian Dulisz <damian.dulisz@gmail.com>, Eduardo San Martin Morote <posva13@gmail.com>
+ * vue-global-events v1.2.0
+ * (c) 2020 Damian Dulisz <damian.dulisz@gmail.com>, Eduardo San Martin Morote <posva13@gmail.com>
  * @license MIT
  */
 
@@ -50,6 +50,15 @@ var index = {
     }
   },
 
+  // track keep-alive active state
+  data: function () { return ({ isActive: true }); },
+  activated: function activated () {
+    this.isActive = true;
+  },
+  deactivated: function deactivated () {
+    this.isActive = false;
+  },
+
   render: function (h) { return h(); },
 
   mounted: function mounted () {
@@ -59,7 +68,7 @@ var index = {
     Object.keys(this.$listeners).forEach(function (event) {
       var listener = this$1.$listeners[event];
       var handler = function (e) {
-        this$1.filter(e, listener, event) && listener(e);
+        this$1.isActive && this$1.filter(e, listener, event) && listener(e);
       };
       window[this$1.target].addEventListener(
         event.replace(nonEventNameCharsRE, ''),
