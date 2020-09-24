@@ -39,11 +39,9 @@ export default {
   // track keep-alive active state
   data: () => ({ isActive: true }),
   activated () {
-    console.log('activated')
     this.isActive = true
   },
   deactivated () {
-    console.log('deactivated')
     this.isActive = false
   },
 
