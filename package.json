@@ -60,7 +60,7 @@
     "codecov": "^3.5.0",
     "eslint": "^7.0.0",
     "eslint-config-posva": "^3.0.2",
-    "jest": "^26.0.0",
+    "jest": "^27.0.1",
     "rollit": "^0.0.9",
     "vue": "^2.6.10",
     "vue-template-compiler": "^2.6.10"
