@@ -1,3 +1,7 @@
+## [2.1.1](https://github.com/shentao/vue-global-events/compare/v2.1.0...v2.1.1) (2022-03-11)
+
+Update npm tag
+
 # [2.1.0](https://github.com/shentao/vue-global-events/compare/v2.0.1...v2.1.0) (2020-09-05)
 
 ### Features
