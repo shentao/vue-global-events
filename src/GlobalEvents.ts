@@ -1,13 +1,12 @@
 import {
   defineComponent,
-  PropType,
-  VNodeProps,
   onMounted,
   onBeforeUnmount,
   ref,
   onActivated,
   onDeactivated,
 } from 'vue'
+import type { PropType, VNodeProps } from 'vue'
 import { isIE } from './isIE'
 
 const EVENT_NAME_RE = /^on(\w+?)((?:Once|Capture|Passive)*)$/
