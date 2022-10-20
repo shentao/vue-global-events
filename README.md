@@ -2,6 +2,8 @@
 
 > Add shortcuts by listening to events on the document, anywhere
 
+This is the version for Vue 3, if you are looking for the Vue 2 version, [take a look at the `v1` branch](https://github.com/shentao/vue-global-events/tree/v1)
+
 ## Sponsors
 
 ### Bronze
