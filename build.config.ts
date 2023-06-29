@@ -2,7 +2,7 @@ import { defineBuildConfig } from 'unbuild'
 import type { PackageJson } from 'pkg-types'
 
 export default defineBuildConfig({
-  entries: ['./src/index'],
+  entries: ['./src/index', './src/filters.ts'],
   declaration: true,
   clean: true,
   rollup: {
