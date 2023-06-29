@@ -1,6 +1,6 @@
-import { describe, test, expect, vi } from 'vitest'
+import { describe, test, expect, vi, afterEach } from 'vitest'
 import { GlobalEventsImpl as GlobalEvents } from './GlobalEvents'
-import { mount } from '@vue/test-utils'
+import { mount, enableAutoUnmount } from '@vue/test-utils'
 // @ts-expect-error: mocked
 import ie from './isIE'
 import { nextTick } from 'vue'
@@ -8,6 +8,12 @@ import { nextTick } from 'vue'
 vi.mock('../src/isIE.ts')
 
 describe('GlobalEvents', () => {
+  enableAutoUnmount(afterEach)
+  afterEach(() => {
+    vi.restoreAllMocks()
+    vi.clearAllMocks()
+    vi.resetAllMocks()
+  })
   test('transfer events', () => {
     const onKeydown = vi.fn()
     const onCallcontext = vi.fn()
@@ -67,6 +73,64 @@ describe('GlobalEvents', () => {
     expect(filter).toHaveBeenCalledWith(event, expect.any(Function), 'keydown')
   })
 
+  test('supports a global prevent modifier', async () => {
+    return new Promise(async (resolve, reject) => {
+      mount(GlobalEvents, {
+        props: {
+          prevent: true,
+        },
+        attrs: {
+          onKeydown: (event: Event) => {
+            try {
+              expect(event.defaultPrevented).toBe(true)
+              resolve(0)
+            } catch (err) {
+              reject(err)
+            }
+          },
+        },
+        attachTo: document.body,
+      })
+
+      document.dispatchEvent(
+        new KeyboardEvent('keydown', {
+          key: 'a',
+          bubbles: true,
+          cancelable: true,
+        })
+      )
+    })
+  })
+
+  test('supports a global stop modifier', async () => {
+    return new Promise(async (resolve, reject) => {
+      const event = new KeyboardEvent('keydown', {
+        key: 'a',
+        bubbles: true,
+        cancelable: true,
+      })
+      const spy = vi.spyOn(event, 'stopPropagation')
+      mount(GlobalEvents, {
+        props: {
+          stop: true,
+        },
+        attrs: {
+          onKeydown: (event: Event) => {
+            try {
+              expect(spy).toHaveBeenCalled()
+              resolve(0)
+            } catch (err) {
+              reject(err)
+            }
+          },
+        },
+        attachTo: document.body,
+      })
+
+      document.dispatchEvent(event)
+    })
+  })
+
   test('cleans up events', () => {
     const onKeydown = vi.fn()
     const onCallcontext = vi.fn()
@@ -77,7 +141,7 @@ describe('GlobalEvents', () => {
       },
     })
 
-    const spy = (document.removeEventListener = vi.fn())
+    const spy = vi.spyOn(document, 'removeEventListener')
 
     wrapper.unmount()
 
@@ -88,8 +152,6 @@ describe('GlobalEvents', () => {
       expect.any(Function),
       undefined
     )
-
-    spy.mockRestore()
   })
 
   test('cleans up events with modifiers', () => {
@@ -100,7 +162,7 @@ describe('GlobalEvents', () => {
       },
     })
 
-    const spy = (document.removeEventListener = vi.fn())
+    const spy = vi.spyOn(document, 'removeEventListener')
 
     wrapper.unmount()
 
@@ -108,13 +170,11 @@ describe('GlobalEvents', () => {
     expect(spy).toHaveBeenCalledWith('keydown', expect.any(Function), {
       capture: true,
     })
-
-    spy.mockRestore()
   })
 
   test('supports passive modifier', () => {
     const onKeydown = vi.fn()
-    const spy = (document.addEventListener = vi.fn())
+    const spy = vi.spyOn(document, 'addEventListener')
     mount(GlobalEvents, {
       attrs: {
         onKeydownPassive: onKeydown,
@@ -124,13 +184,11 @@ describe('GlobalEvents', () => {
     expect(spy).toHaveBeenCalledWith('keydown', expect.any(Function), {
       passive: true,
     })
-
-    spy.mockRestore()
   })
 
   test('strips off modifiers from events', () => {
     const keydown = vi.fn()
-    const spy = (document.addEventListener = vi.fn())
+    const spy = vi.spyOn(document, 'addEventListener')
     mount(GlobalEvents, {
       attrs: {
         onKeydownOnce: keydown,
@@ -140,12 +198,11 @@ describe('GlobalEvents', () => {
     expect(spy).toHaveBeenCalledWith('keydown', expect.any(Function), {
       once: true,
     })
-    spy.mockRestore()
   })
 
   test('supports capture modifier', () => {
     const keydown = vi.fn()
-    const spy = (document.addEventListener = vi.fn())
+    const spy = vi.spyOn(document, 'addEventListener')
     mount(GlobalEvents, {
       attrs: {
         onKeydownCapture: keydown,
@@ -155,12 +212,11 @@ describe('GlobalEvents', () => {
     expect(spy).toHaveBeenCalledWith('keydown', expect.any(Function), {
       capture: true,
     })
-    spy.mockRestore()
   })
 
   test('supports once modifier', () => {
     const keydown = vi.fn()
-    const spy = (document.addEventListener = vi.fn())
+    const spy = vi.spyOn(document, 'addEventListener')
     mount(GlobalEvents, {
       attrs: {
         onKeydownOnce: keydown,
@@ -170,12 +226,11 @@ describe('GlobalEvents', () => {
     expect(spy).toHaveBeenCalledWith('keydown', expect.any(Function), {
       once: true,
     })
-    spy.mockRestore()
   })
 
   test('supports multiple modifier', () => {
     const keydown = vi.fn()
-    const spy = (document.addEventListener = vi.fn())
+    const spy = vi.spyOn(document, 'addEventListener')
     mount(GlobalEvents, {
       attrs: {
         onKeydownOnceCapture: keydown,
@@ -186,45 +241,11 @@ describe('GlobalEvents', () => {
       capture: true,
       once: true,
     })
-    spy.mockRestore()
-  })
-
-  test.todo('supports a global prevent modifier', async () => {
-    // expect.assertions(1)
-    // return new Promise(async (resolve) => {
-    mount(GlobalEvents, {
-      props: {
-        prevent: true,
-      },
-      attrs: {
-        onKeydown: (event: Event) => {
-          console.log('event', event)
-          expect(event.defaultPrevented).toBe(true)
-          // resolve(0)
-        },
-      },
-      attachTo: document.body,
-    })
-
-    // await nextTick()
-
-    expect(
-      document.dispatchEvent(
-        new KeyboardEvent('keydown', {
-          key: 'a',
-          bubbles: true,
-          cancelable: true,
-        })
-      )
-    ).toBe(false)
-    // })
-    await nextTick()
-    await nextTick()
   })
 
   test('passes a boolean instead of object if IE', () => {
     const keydown = vi.fn()
-    const spy = (document.addEventListener = vi.fn())
+    const spy = vi.spyOn(document, 'addEventListener')
     ie.value = true
     mount(GlobalEvents, {
       attrs: {
@@ -236,12 +257,11 @@ describe('GlobalEvents', () => {
 
     expect(spy).toHaveBeenCalledWith('keydown', expect.any(Function), true)
     expect(spy).toHaveBeenCalledWith('keydown', expect.any(Function), false)
-    spy.mockRestore()
   })
 
   test('support different targets', () => {
     const keydown = vi.fn()
-    const spy = vi.spyOn(global.window, 'addEventListener')
+    const spy = vi.spyOn(window, 'addEventListener')
     mount(GlobalEvents, {
       props: {
         target: 'window',
@@ -251,11 +271,9 @@ describe('GlobalEvents', () => {
       },
     })
 
-    expect(global.window.addEventListener).toHaveBeenCalledWith(
-      'keydown',
-      expect.any(Function),
-      { capture: true, once: true }
-    )
-    spy.mockRestore()
+    expect(spy).toHaveBeenCalledWith('keydown', expect.any(Function), {
+      capture: true,
+      once: true,
+    })
   })
 })
