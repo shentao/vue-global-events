@@ -2,7 +2,7 @@
   "name": "vue-global-events",
   "type": "module",
   "packageManager": "pnpm@8.6.5",
-  "version": "2.1.1",
+  "version": "3.0.0",
   "description": "Register global events using vue template shortcuts",
   "main": "./dist/index.mjs",
   "module": "./dist/index.mjs",
