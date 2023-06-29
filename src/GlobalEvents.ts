@@ -57,7 +57,7 @@ export const GlobalEventsImpl = defineComponent({
       default: 'document',
     },
     filter: {
-      type: Function as PropType<EventFilter>,
+      type: [Function, Array] as PropType<EventFilter | EventFilter[]>,
       default: () => () => true,
     },
 
@@ -106,7 +106,13 @@ export const GlobalEventsImpl = defineComponent({
 
           const handlers: EventListener[] = listeners.map(
             (listener) => (event) => {
-              if (isActive.value && props.filter(event, listener, eventName)) {
+              const filters = Array.isArray(props.filter)
+                ? props.filter
+                : [props.filter]
+              if (
+                isActive.value &&
+                filters.every((filter) => filter(event, listener, eventName))
+              ) {
                 if (props.stop) event.stopPropagation()
                 if (props.prevent) event.preventDefault()
                 listener(event)

@@ -34,16 +34,29 @@ describe('GlobalEvents', () => {
 
   test('filter out events', () => {
     const onKeydown = vi.fn()
-    let called = false
-    // easy to test filter that calls only the filst event
-    const filter = () => {
-      const shouldCall = !called
-      called = true
-      return shouldCall
-    }
+    const filter = vi.fn().mockImplementationOnce(() => true)
     mount(GlobalEvents, {
       attrs: { onKeydown },
       props: { filter },
+    })
+    expect(onKeydown).not.toHaveBeenCalled()
+
+    document.dispatchEvent(new Event('keydown'))
+    expect(onKeydown).toHaveBeenCalledTimes(1)
+
+    document.dispatchEvent(new Event('keydown'))
+    document.dispatchEvent(new Event('keydown'))
+    document.dispatchEvent(new Event('keydown'))
+    expect(onKeydown).toHaveBeenCalledTimes(1)
+  })
+
+  test('multiple filters', () => {
+    const onKeydown = vi.fn()
+    const f1 = vi.fn().mockImplementationOnce(() => true)
+    const f2 = vi.fn().mockImplementationOnce(() => true)
+    mount(GlobalEvents, {
+      attrs: { onKeydown },
+      props: { filter: [f1, f2] },
     })
     expect(onKeydown).not.toHaveBeenCalled()
 
