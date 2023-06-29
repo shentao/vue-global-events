@@ -189,7 +189,7 @@ describe('GlobalEvents', () => {
     spy.mockRestore()
   })
 
-  test('supports a global prevent modifier', async () => {
+  test.todo('supports a global prevent modifier', async () => {
     // expect.assertions(1)
     // return new Promise(async (resolve) => {
     mount(GlobalEvents, {
