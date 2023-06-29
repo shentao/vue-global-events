@@ -1,14 +1,16 @@
-import { GlobalEventsImpl as GlobalEvents } from '../src/GlobalEvents'
+import { describe, test, expect, vi } from 'vitest'
+import { GlobalEventsImpl as GlobalEvents } from './GlobalEvents'
 import { mount } from '@vue/test-utils'
-// @ts-ignore
-import ie from '../src/isIE'
+// @ts-expect-error: mocked
+import ie from './isIE'
+import { nextTick } from 'vue'
 
-jest.mock('../src/isIE.ts')
+vi.mock('../src/isIE.ts')
 
 describe('GlobalEvents', () => {
   test('transfer events', () => {
-    const onKeydown = jest.fn()
-    const onCallcontext = jest.fn()
+    const onKeydown = vi.fn()
+    const onCallcontext = vi.fn()
     mount(GlobalEvents, {
       attrs: {
         onKeydown,
@@ -26,7 +28,7 @@ describe('GlobalEvents', () => {
   })
 
   test('filter out events', () => {
-    const onKeydown = jest.fn()
+    const onKeydown = vi.fn()
     let called = false
     // easy to test filter that calls only the filst event
     const filter = () => {
@@ -36,7 +38,6 @@ describe('GlobalEvents', () => {
     }
     mount(GlobalEvents, {
       attrs: { onKeydown },
-      // @ts-ignore
       props: { filter },
     })
     expect(onKeydown).not.toHaveBeenCalled()
@@ -51,11 +52,10 @@ describe('GlobalEvents', () => {
   })
 
   test('filter gets passed handler, and keyName', () => {
-    const onKeydown = jest.fn()
-    const filter = jest.fn()
+    const onKeydown = vi.fn()
+    const filter = vi.fn()
     mount(GlobalEvents, {
       attrs: { onKeydown },
-      // @ts-ignore: should work
       props: { filter },
     })
 
@@ -68,8 +68,8 @@ describe('GlobalEvents', () => {
   })
 
   test('cleans up events', () => {
-    const onKeydown = jest.fn()
-    const onCallcontext = jest.fn()
+    const onKeydown = vi.fn()
+    const onCallcontext = vi.fn()
     const wrapper = mount(GlobalEvents, {
       attrs: {
         onKeydown,
@@ -77,7 +77,7 @@ describe('GlobalEvents', () => {
       },
     })
 
-    const spy = (document.removeEventListener = jest.fn())
+    const spy = (document.removeEventListener = vi.fn())
 
     wrapper.unmount()
 
@@ -93,14 +93,14 @@ describe('GlobalEvents', () => {
   })
 
   test('cleans up events with modifiers', () => {
-    const keydown = jest.fn()
+    const keydown = vi.fn()
     const wrapper = mount(GlobalEvents, {
       attrs: {
         onKeydownCapture: keydown,
       },
     })
 
-    const spy = (document.removeEventListener = jest.fn())
+    const spy = (document.removeEventListener = vi.fn())
 
     wrapper.unmount()
 
@@ -113,8 +113,8 @@ describe('GlobalEvents', () => {
   })
 
   test('supports passive modifier', () => {
-    const onKeydown = jest.fn()
-    const spy = (document.addEventListener = jest.fn())
+    const onKeydown = vi.fn()
+    const spy = (document.addEventListener = vi.fn())
     mount(GlobalEvents, {
       attrs: {
         onKeydownPassive: onKeydown,
@@ -129,8 +129,8 @@ describe('GlobalEvents', () => {
   })
 
   test('strips off modifiers from events', () => {
-    const keydown = jest.fn()
-    const spy = (document.addEventListener = jest.fn())
+    const keydown = vi.fn()
+    const spy = (document.addEventListener = vi.fn())
     mount(GlobalEvents, {
       attrs: {
         onKeydownOnce: keydown,
@@ -144,8 +144,8 @@ describe('GlobalEvents', () => {
   })
 
   test('supports capture modifier', () => {
-    const keydown = jest.fn()
-    const spy = (document.addEventListener = jest.fn())
+    const keydown = vi.fn()
+    const spy = (document.addEventListener = vi.fn())
     mount(GlobalEvents, {
       attrs: {
         onKeydownCapture: keydown,
@@ -159,8 +159,8 @@ describe('GlobalEvents', () => {
   })
 
   test('supports once modifier', () => {
-    const keydown = jest.fn()
-    const spy = (document.addEventListener = jest.fn())
+    const keydown = vi.fn()
+    const spy = (document.addEventListener = vi.fn())
     mount(GlobalEvents, {
       attrs: {
         onKeydownOnce: keydown,
@@ -174,8 +174,8 @@ describe('GlobalEvents', () => {
   })
 
   test('supports multiple modifier', () => {
-    const keydown = jest.fn()
-    const spy = (document.addEventListener = jest.fn())
+    const keydown = vi.fn()
+    const spy = (document.addEventListener = vi.fn())
     mount(GlobalEvents, {
       attrs: {
         onKeydownOnceCapture: keydown,
@@ -189,10 +189,42 @@ describe('GlobalEvents', () => {
     spy.mockRestore()
   })
 
+  test('supports a global prevent modifier', async () => {
+    // expect.assertions(1)
+    // return new Promise(async (resolve) => {
+    mount(GlobalEvents, {
+      props: {
+        prevent: true,
+      },
+      attrs: {
+        onKeydown: (event: Event) => {
+          console.log('event', event)
+          expect(event.defaultPrevented).toBe(true)
+          // resolve(0)
+        },
+      },
+      attachTo: document.body,
+    })
+
+    // await nextTick()
+
+    expect(
+      document.dispatchEvent(
+        new KeyboardEvent('keydown', {
+          key: 'a',
+          bubbles: true,
+          cancelable: true,
+        })
+      )
+    ).toBe(false)
+    // })
+    await nextTick()
+    await nextTick()
+  })
+
   test('passes a boolean instead of object if IE', () => {
-    const keydown = jest.fn()
-    const spy = (document.addEventListener = jest.fn())
-    // @ts-ignore
+    const keydown = vi.fn()
+    const spy = (document.addEventListener = vi.fn())
     ie.value = true
     mount(GlobalEvents, {
       attrs: {
@@ -200,7 +232,6 @@ describe('GlobalEvents', () => {
         onKeydownOnce: keydown,
       },
     })
-    // @ts-ignore
     ie.value = false
 
     expect(spy).toHaveBeenCalledWith('keydown', expect.any(Function), true)
@@ -209,10 +240,9 @@ describe('GlobalEvents', () => {
   })
 
   test('support different targets', () => {
-    const keydown = jest.fn()
-    const spy = jest.spyOn(global.window, 'addEventListener')
+    const keydown = vi.fn()
+    const spy = vi.spyOn(global.window, 'addEventListener')
     mount(GlobalEvents, {
-      // @ts-ignore
       props: {
         target: 'window',
       },

@@ -1,6 +1,7 @@
 import { GlobalEventsImpl as GlobalEvents } from '../src/GlobalEvents'
 import { mount } from '@vue/test-utils'
 import { defineComponent, KeepAlive, nextTick } from 'vue'
+import { describe, test, expect, vi } from 'vitest'
 
 const TestWrapper = (name: string, fn: Function) =>
   defineComponent({
@@ -17,7 +18,7 @@ const TestWrapper = (name: string, fn: Function) =>
 
 describe('GlobalEvents with KeepAlive', () => {
   test('skips events when deactivated', async () => {
-    const onKeydown = jest.fn()
+    const onKeydown = vi.fn()
     const wrapper = mount(TestWrapper('onKeydown', onKeydown))
 
     wrapper.vm.active = false

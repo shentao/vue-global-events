@@ -10,14 +10,11 @@ jobs:
     name: Create Release
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@master
-      - name: Create Release for Tag
-        id: release_tag
-        uses: yyx990803/release-tag@master
+      - uses: actions/checkout@v3
+      - uses: yyx990803/release-tag@v1.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref }}
           body: |
-            Please refer to [CHANGELOG.md](https://github.com/shentao/vue-global-events/blob/master/CHANGELOG.md) for details.
+            Please refer to [CHANGELOG.md](https://github.com/posva/vue-use-spring/blob/main/CHANGELOG.md) for details.

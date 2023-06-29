@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Question
+    url: https://github.com/posva/vue-use-spring/discussions/new?category=Q-A
+    about: Ask a question or discuss about Pinia
+  - name: Ideas
+    url: https://github.com/posva/vue-use-spring/discussions/new?category=Ideas
+    about: Start a discussion to improve Vue Use Spring
+  - name: GitHub Sponsors
+    url: https://github.com/sponsors/posva
+    about: Like this project? Please consider supporting the author.

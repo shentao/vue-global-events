@@ -13,15 +13,14 @@ const EVENT_NAME_RE = /^on(\w+?)((?:Once|Capture|Passive)*)$/
 const MODIFIERS_SEPARATOR_RE = /[OCP]/g
 
 export interface GlobalEventsProps {
-  target?: Exclude<keyof Window, number>
+  // TODO: should probably allow just document and arbitrary strings for global elements with an id
+  target?: Extract<keyof Window, string>
   filter?: EventFilter
 }
 
-export type EventFilter = (
-  event: Event,
-  listener: EventListener,
-  name: string
-) => any
+export interface EventFilter<E extends Event = Event> {
+  (event: E, listener: EventListener, name: string): unknown
+}
 
 type Options = AddEventListenerOptions & EventListenerOptions
 
