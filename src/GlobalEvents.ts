@@ -64,7 +64,6 @@ export const GlobalEventsImpl = defineComponent({
     // global event options
     stop: Boolean,
     prevent: Boolean,
-    self: Boolean,
     // Cannot be implemented because we don't have access to other modifiers at runtime
     // exact: Boolean,
   },
@@ -110,7 +109,6 @@ export const GlobalEventsImpl = defineComponent({
               if (isActive.value && props.filter(event, listener, eventName)) {
                 if (props.stop) event.stopPropagation()
                 if (props.prevent) event.preventDefault()
-                if (props.self && event.target !== event.currentTarget) return
                 listener(event)
               }
             }
