@@ -30,8 +30,6 @@
       "esnext",
       "dom"
     ],
-    "types": [
-      "node"
-    ]
+    "types": []
   }
 }
