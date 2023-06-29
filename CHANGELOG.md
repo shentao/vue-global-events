@@ -1,3 +1,9 @@
+# [2.2.0](https://github.com/shentao/vue-global-events/compare/v2.1.1...v2.2.0) (2023-06-29)
+
+### Features
+
+- add global modifiers ([c4847f5](https://github.com/shentao/vue-global-events/commit/c4847f5e4252ff79f1f9973d20c72b51dccf875d)), closes [#19](https://github.com/shentao/vue-global-events/issues/19)
+
 ## [2.1.1](https://github.com/shentao/vue-global-events/compare/v2.1.0...v2.1.1) (2022-03-11)
 
 Update npm tag
