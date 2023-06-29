@@ -4,3 +4,5 @@ export type {
   EventFilter,
   GlobalEventsImpl,
 } from './GlobalEvents'
+
+export * from './filters'

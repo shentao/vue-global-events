@@ -14,11 +14,6 @@
       "types": "./dist/index.d.ts",
       "require": "./dist/index.cjs",
       "import": "./dist/index.mjs"
-    },
-    "./filters": {
-      "types": "./dist/filters.d.ts",
-      "require": "./dist/filters.cjs",
-      "import": "./dist/filters.mjs"
     }
   },
   "sideEffects": false,
