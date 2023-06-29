@@ -61,6 +61,13 @@ export const GlobalEventsImpl = defineComponent({
       type: Function as PropType<EventFilter>,
       default: () => () => true,
     },
+
+    // global event options
+    stop: Boolean,
+    prevent: Boolean,
+    self: Boolean,
+    // Cannot be implemented because we don't have access to other modifiers at runtime
+    // exact: Boolean,
   },
 
   setup(props, { attrs }) {
@@ -101,9 +108,12 @@ export const GlobalEventsImpl = defineComponent({
 
           const handlers: EventListener[] = listeners.map(
             (listener) => (event) => {
-              isActive.value &&
-                props.filter(event, listener, eventName) &&
+              if (isActive.value && props.filter(event, listener, eventName)) {
+                if (props.stop) event.stopPropagation()
+                if (props.prevent) event.preventDefault()
+                if (props.self && event.target !== event.currentTarget) return
                 listener(event)
+              }
             }
           )
 
@@ -127,13 +137,12 @@ export const GlobalEventsImpl = defineComponent({
 
     onBeforeUnmount(() => {
       for (const eventNameWithModifiers in activeListeners) {
-        const [handlers, eventName, options] = activeListeners[
-          eventNameWithModifiers
-        ]
+        const [handlers, eventName, options] =
+          activeListeners[eventNameWithModifiers]
         handlers.forEach((handler) => {
-          ;(window[
-            props.target as keyof Window
-          ] as Element).removeEventListener(eventName, handler, options)
+          ;(
+            window[props.target as keyof Window] as Element
+          ).removeEventListener(eventName, handler, options)
         })
       }
 
@@ -149,7 +158,7 @@ export const GlobalEventsImpl = defineComponent({
 /**
  * Component of vue-lib.
  */
-export const GlobalEvents = (GlobalEventsImpl as any) as {
+export const GlobalEvents = GlobalEventsImpl as any as {
   new (): {
     $props: VNodeProps & GlobalEventsProps
   }
