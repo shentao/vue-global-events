@@ -1,1 +1,6 @@
-export { GlobalEvents, GlobalEventsProps } from './GlobalEvents'
+export { GlobalEvents } from './GlobalEvents'
+export type {
+  GlobalEventsProps,
+  EventFilter,
+  GlobalEventsImpl,
+} from './GlobalEvents'
