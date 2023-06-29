@@ -3,7 +3,6 @@ import { GlobalEventsImpl as GlobalEvents } from './GlobalEvents'
 import { mount, enableAutoUnmount } from '@vue/test-utils'
 // @ts-expect-error: mocked
 import ie from './isIE'
-import { nextTick } from 'vue'
 
 vi.mock('../src/isIE.ts')
 
