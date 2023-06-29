@@ -50,6 +50,64 @@ describe('GlobalEvents', () => {
     expect(onKeydown).toHaveBeenCalledTimes(1)
   })
 
+  test('supports a global prevent modifier', async () => {
+    return new Promise(async (resolve, reject) => {
+      mount(GlobalEvents, {
+        props: {
+          prevent: true,
+        },
+        attrs: {
+          onKeydown: (event: Event) => {
+            try {
+              expect(event.defaultPrevented).toBe(true)
+              resolve(0)
+            } catch (err) {
+              reject(err)
+            }
+          },
+        },
+        attachTo: document.body,
+      })
+
+      document.dispatchEvent(
+        new KeyboardEvent('keydown', {
+          key: 'a',
+          bubbles: true,
+          cancelable: true,
+        })
+      )
+    })
+  })
+
+  test('supports a global stop modifier', async () => {
+    return new Promise(async (resolve, reject) => {
+      const event = new KeyboardEvent('keydown', {
+        key: 'a',
+        bubbles: true,
+        cancelable: true,
+      })
+      const spy = jest.spyOn(event, 'stopPropagation')
+      mount(GlobalEvents, {
+        props: {
+          stop: true,
+        },
+        attrs: {
+          onKeydown: (event: Event) => {
+            try {
+              expect(spy).toHaveBeenCalled()
+              resolve(0)
+            } catch (err) {
+              reject(err)
+            }
+          },
+        },
+        attachTo: document.body,
+      })
+
+      document.dispatchEvent(event)
+    })
+  })
+
   test('filter gets passed handler, and keyName', () => {
     const onKeydown = jest.fn()
     const filter = jest.fn()
