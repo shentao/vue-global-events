@@ -1,3 +1,14 @@
+## [3.0.1](https://github.com/shentao/vue-global-events/compare/v3.0.0...v3.0.1) (2023-10-04)
+
+### Bug Fixes
+
+- **iife:** correct file ([d3483e4](https://github.com/shentao/vue-global-events/commit/d3483e43ee2fedb0f18c99d81faccb578d677506))
+
+### Features
+
+- add include and exclude filters ([f305def](https://github.com/shentao/vue-global-events/commit/f305def148758da35ad32444fbfdfcdc76f4f2d1))
+- allow passing multiple filters in prop ([fb5fcda](https://github.com/shentao/vue-global-events/commit/fb5fcdaff9a7b35671b09e52f1f4ad76c354ee72))
+
 # [3.0.0](https://github.com/shentao/vue-global-events/compare/v2.1.1...v3.0.0) (2023-06-29)
 
 ### Bug Fixes
