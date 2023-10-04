@@ -20,7 +20,6 @@ export default defineBuildConfig({
 
       options.output.push({
         name: 'VueGlobalEvents',
-        // file: 'index.iife.js',
         dir: './dist',
         format: 'iife',
         globals: {
