@@ -26,7 +26,8 @@
     "lint:fix": "pnpm run lint --write",
     "test:types": "tsc --noEmit",
     "test:unit": "vitest --coverage",
-    "test": "pnpm run test:types && pnpm run lint && pnpm run test:unit run && pnpm run build"
+    "test": "pnpm run test:types && pnpm run lint && pnpm run test:unit run && pnpm run build",
+    "postinstall": "simple-git-hooks"
   },
   "files": [
     "dist",
@@ -76,19 +77,19 @@
     "p-series": "^3.0.0",
     "prettier": "^2.8.8",
     "semver": "^7.5.3",
+    "simple-git-hooks": "^2.9.0",
     "typescript": "^5.1.5",
     "unbuild": "^1.2.1",
     "vite": "^4.3.9",
     "vitest": "^0.32.2",
-    "vue": "^3.3.4",
-    "yorkie": "^2.0.0"
+    "vue": "^3.3.4"
   },
-  "gitHooks": {
-    "pre-commit": "lint-staged",
+  "simple-git-hooks": {
+    "pre-commit": "pnpm lint-staged",
     "commit-msg": "node scripts/verifyCommit.mjs"
   },
   "lint-staged": {
-    "*.js": [
+    "*.{js,mjs,json,cjs}": [
       "prettier --write"
     ],
     "*.ts?(x)": [
