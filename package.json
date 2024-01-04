@@ -27,7 +27,7 @@
     "test:types": "tsc --noEmit",
     "test:unit": "vitest --coverage",
     "test": "pnpm run test:types && pnpm run lint && pnpm run test:unit run && pnpm run build",
-    "postinstall": "simple-git-hooks"
+    "prepare": "simple-git-hooks"
   },
   "files": [
     "dist",
